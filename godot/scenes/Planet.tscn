@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://6jfe8abk6kwu"]
+
+[ext_resource type="PackedScene" uid="uid://bqghrsvw8ba18" path="res://scenes/WebSocketClient.tscn" id="1_glmwd"]
+[ext_resource type="PackedScene" uid="uid://d3wmdd7outpjs" path="res://scenes/rockets/Rocket.tscn" id="1_kkdfw"]
+[ext_resource type="Texture2D" uid="uid://bda5m6jgxlaqu" path="res://images/earth.png" id="2_lhter"]
+
+[sub_resource type="CircleShape2D" id="2"]
+radius = 328.5
+
+[node name="Node2D" type="Node2D"]
+
+[node name="WebSocketClient" parent="." node_paths=PackedStringArray("control") instance=ExtResource("1_glmwd")]
+control = NodePath("../Rocket")
+
+[node name="Rocket" parent="." instance=ExtResource("1_kkdfw")]
+position = Vector2(557, 931)
+center_of_mass_mode = 1
+gravity_scale = 0.0
+maxThrustAngle = 15.0
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(548, 4399)
+scale = Vector2(10, 10)
+
+[node name="earth" type="Sprite2D" parent="CharacterBody2D"]
+texture = ExtResource("2_lhter")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("2")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(556, 578)
+zoom = Vector2(0.4, 0.4)
