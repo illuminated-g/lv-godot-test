@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://6jfe8abk6kwu"]
+[gd_scene load_steps=6 format=3 uid="uid://6jfe8abk6kwu"]
 
+[ext_resource type="Script" path="res://scripts/KeyboardControl.gd" id="1_fqb2g"]
 [ext_resource type="PackedScene" uid="uid://bqghrsvw8ba18" path="res://scenes/WebSocketClient.tscn" id="1_glmwd"]
 [ext_resource type="PackedScene" uid="uid://d3wmdd7outpjs" path="res://scenes/rockets/Rocket.tscn" id="1_kkdfw"]
 [ext_resource type="Texture2D" uid="uid://bda5m6jgxlaqu" path="res://images/earth.png" id="2_lhter"]
@@ -7,7 +8,9 @@
 [sub_resource type="CircleShape2D" id="2"]
 radius = 328.5
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("rocket")]
+script = ExtResource("1_fqb2g")
+rocket = NodePath("Rocket")
 
 [node name="WebSocketClient" parent="." node_paths=PackedStringArray("control") instance=ExtResource("1_glmwd")]
 control = NodePath("../Rocket")
