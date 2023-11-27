@@ -7,10 +7,25 @@ class_name WebSocketClient
 @export var control : Rocket
 
 var ws = WebSocketPeer.new()
+var wsUrl = ""
+
+func getWsUrl():
+	var urlParam = JavaScriptBridge.eval("""
+			var wsUrl = new URL(\"""" + url + """\");
+			var url = new URL(window.location.href);
+			wsUrl.port = url.port;
+			window.wsUrl = wsUrl;
+			wsUrl.toString();
+		""")
+	
+	if urlParam == null:
+		return url
+	else:
+		return urlParam
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	wsUrl = getWsUrl()
 
 func publishState():
 	var payload = PackedByteArray()
@@ -61,6 +76,6 @@ func _process(delta):
 		var reason = ws.get_close_reason()
 		print("WebSocket closed with code: %d, reason %s. Clean: %s" % [code, reason, code != -1])
 		
-		var err = ws.connect_to_url(url)
+		var err = ws.connect_to_url(wsUrl)
 		if err:
 			printerr(err)
